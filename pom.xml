@@ -13,6 +13,7 @@
         <module>example-provider</module>
         <module>example-common</module>
         <module>yu-rpc-easy</module>
+        <module>core</module>
     </modules>
 
     <properties>
