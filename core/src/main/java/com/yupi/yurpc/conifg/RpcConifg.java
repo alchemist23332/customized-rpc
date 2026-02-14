@@ -1,5 +1,6 @@
 package com.yupi.yurpc.conifg;
 
+import com.yupi.yurpc.serializer.SerializerKeys;
 import lombok.Data;
 
 @Data
@@ -20,5 +21,20 @@ public class RpcConifg {
      * 版本号
      */
     private String version = "1.0";
+
+    /**
+     * 是否开启mock
+     */
+    private boolean mock = false;
+
+    /**
+     * 序列化方式
+     */
+    private String serializer = SerializerKeys.JDK;
+
+    /**
+     * 注册中心配置
+     */
+    private RegistryConfig registryConfig = new RegistryConfig();
 
 }

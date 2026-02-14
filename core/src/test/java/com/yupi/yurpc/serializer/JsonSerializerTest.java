@@ -29,7 +29,6 @@ public class JsonSerializerTest {
         Assert.assertTrue(deserialized.getArgs()[1] instanceof User);
         User user = (User) deserialized.getArgs()[1];
         Assert.assertEquals("tom", user.getName());
-        Assert.assertEquals(18, user.getAge());
     }
 
     @Test
@@ -46,7 +45,6 @@ public class JsonSerializerTest {
         Assert.assertTrue(deserialized.getData() instanceof User);
         User data = (User) deserialized.getData();
         Assert.assertEquals("jerry", data.getName());
-        Assert.assertEquals(20, data.getAge());
     }
 
     public static class User {

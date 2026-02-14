@@ -1,5 +1,6 @@
 package com.yupi.yurpc.model;
 
+import com.yupi.yurpc.constant.RpcConstant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,4 +29,8 @@ public class RpcRequest implements Serializable {
      * 参数值列表
      */
     private Object[] args;
+    /**
+     * 版本号
+     */
+    private String serviceVersion = RpcConstant.DEFAULT_SERVICE_VERSION;
 }

@@ -4,4 +4,8 @@ import com.yupi.example.common.model.User;
 
 public interface UserService {
     User getUser(User user);
+
+    default short getNum() {
+        return 1;
+    }
 }
