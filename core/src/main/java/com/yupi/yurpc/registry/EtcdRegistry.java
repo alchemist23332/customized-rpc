@@ -184,13 +184,15 @@ public class EtcdRegistry implements Registry{
             watchClient.watch(ByteSequence.from(serviceNodeKey, StandardCharsets.UTF_8), response -> {
                 for (WatchEvent event : response.getEvents()) {
                     String key = event.getKeyValue().getKey().toString(StandardCharsets.UTF_8);
-                    String serviceKey = key.substring(4, key.lastIndexOf("/"));
+                    String serviceKey = extractServiceKey(key);
+                    if (serviceKey == null) {
+                        continue;
+                    }
                     switch (event.getEventType()) {
                         case PUT:
                         case DELETE:
                             // 服务列表更新
                             registryCache.deleteCache(serviceKey);
-                            System.out.println("啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊要去了啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊");
                             break;
                         default:
                             break;
@@ -198,5 +200,16 @@ public class EtcdRegistry implements Registry{
                 }
             });
         }
+    }
+    static String extractServiceKey(String serviceNodeKey) {
+        int rootPathLength = ETCD_ROOT_PATH.length();
+        if (serviceNodeKey == null || !serviceNodeKey.startsWith(ETCD_ROOT_PATH)) {
+            return null;
+        }
+        int nodeIndex = serviceNodeKey.lastIndexOf("/");
+        if (nodeIndex <= rootPathLength) {
+            return null;
+        }
+        return serviceNodeKey.substring(rootPathLength, nodeIndex);
     }
 }
