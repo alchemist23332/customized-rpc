@@ -21,10 +21,13 @@ public class ProviderExample {
         RpcConifg rpcConifg = RpcApplication.getRpcConfig();
         RegistryConfig registryConfig = RpcApplication.getRpcConfig().getRegistryConfig();
         Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        //todo 这里写死了服务版本号和服务分组
         ServiceMetaInfo myService = ServiceMetaInfo.builder()
                 .serviceName(UserService.class.getName())
                 .serviceHost(rpcConifg.getServerHost())
                 .servicePort(rpcConifg.getPort())
+                .serviceVersion("1.0")
+                .serviceGroup("default")
                 .build();
         try {
             registry.register(myService);

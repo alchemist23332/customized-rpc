@@ -11,14 +11,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RpcApplication {
     private static volatile RpcConifg rpcConfig;
-    public static void init(RpcConifg rpcConfig) {
+    public static void init(RpcConifg newRpcConfig) {
         // 使用自定义传入配置对象的配置
-        rpcConfig = rpcConfig;
+        rpcConfig = newRpcConfig;
         log.info("初始化RpcConifg: {}", rpcConfig);
         RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
         Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
         registry.init(registryConfig);
         log.info("初始化Registry: {}", registry);
+
+        // 添加关闭钩子, 保证注册中心销毁(删除所有服务信息)
+        Runtime.getRuntime().addShutdownHook(new Thread(registry::destroy));
     }
     public static void init() {
         try {
@@ -33,6 +36,9 @@ public class RpcApplication {
         Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
         registry.init(registryConfig);
         log.info("初始化Registry: {}", registry);
+
+        // 添加关闭钩子, 保证注册中心销毁(删除所有服务信息)
+        Runtime.getRuntime().addShutdownHook(new Thread(registry::destroy));
     }
     /**
      * 双检锁单例模式获取RpcConifg

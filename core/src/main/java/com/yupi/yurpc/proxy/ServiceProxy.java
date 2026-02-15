@@ -31,11 +31,12 @@ public class ServiceProxy implements InvocationHandler {
             // 序列化
             byte[] serialized = serializer.serialize(rpcRequest);
             // 获取服务提供者的地址
+            // todo 这里写死了服务的版本为默认1.0
             RegistryConfig registryConfig = RpcApplication.getRpcConfig().getRegistryConfig();
             Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
             ServiceMetaInfo keyCompose = ServiceMetaInfo.builder()
                     .serviceName(rpcRequest.getServiceName())
-                    .serviceVersion(rpcRequest.getServiceVersion())
+                    .serviceVersion("1.0")
                     .build();
             List<ServiceMetaInfo> serviceList = registry.serviceDiscovery(keyCompose.getServiceKey());
             // todo 负载均衡
