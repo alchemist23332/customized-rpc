@@ -10,6 +10,7 @@ import com.yupi.yurpc.registry.Registry;
 import com.yupi.yurpc.registry.RegistryFactory;
 import com.yupi.yurpc.server.HttpServer;
 import com.yupi.yurpc.server.VertxHttpServer;
+import com.yupi.yurpc.server.tcp.VertxTcpServer;
 
 public class ProviderExample {
     public static void main(String[] args) {
@@ -34,9 +35,14 @@ public class ProviderExample {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        // 启动服务
-        HttpServer httpServer = new VertxHttpServer();
-        httpServer.doStart(RpcApplication.getRpcConfig().getPort());
+
+        // 启动 TCP 服务
+        VertxTcpServer vertxTcpServer = new VertxTcpServer();
+        vertxTcpServer.doStart(8080);
         System.out.println("启动成功");
+//        // 启动服务
+//        HttpServer httpServer = new VertxHttpServer();
+//        httpServer.doStart(RpcApplication.getRpcConfig().getPort());
+//        System.out.println("启动成功");
     }
 }

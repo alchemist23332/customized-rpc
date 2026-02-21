@@ -42,7 +42,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
                 doResponse(request, rpcResponse, serializer);
                 return;
             }
-            // 获取服务
+            // 获取服务(反射)
             try {
                 Class<?> implClass = LocalRegistry.get(rpcRequest.getServiceName());
                 Method method = implClass.getMethod(rpcRequest.getMethodName(), rpcRequest.getParameterTypes());
