@@ -19,7 +19,7 @@ public class EasyProviderApplication {
         // 注册服务
         LocalRegistry.register(UserService.class.getName(), UserServiceImpl.class);
         HttpServer httpServer = new VertxHttpServer();
-        httpServer.doStart(RpcApplication.getRpcConfig().getPort());
+        httpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
 //        SpiLoader.loadAll();
 //        Map<String, Map<String, Class<?>>> allSpi = SpiLoader.getAllSpi();
 //        System.out.println(allSpi);

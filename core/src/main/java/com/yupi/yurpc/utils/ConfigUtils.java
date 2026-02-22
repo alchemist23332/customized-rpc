@@ -26,7 +26,7 @@ public class ConfigUtils {
      */
     public static <T> T loadConfig(Class<T> tClass, String prefix, String environment) {
         StringBuilder path = new StringBuilder("application");
-        if (StrUtil.isNotBlank(environment)) {
+        if (StrUtil.isNotEmpty(environment)) {
             path.append("-").append(environment);
         }
         path.append(".properties");

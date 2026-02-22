@@ -1,5 +1,6 @@
 package com.yupi.yurpc.conifg;
 
+import com.yupi.yurpc.loadbalancer.LoadBalancerKeys;
 import com.yupi.yurpc.serializer.SerializerKeys;
 import lombok.Data;
 
@@ -12,7 +13,7 @@ public class RpcConifg {
     /**
      * 服务端口
      */
-    private int port = 8080;
+    private int serverPort = 8080;
     /**
      * 服务器主机名
      */
@@ -36,5 +37,9 @@ public class RpcConifg {
      * 注册中心配置
      */
     private RegistryConfig registryConfig = new RegistryConfig();
+    /**
+     * 负载均衡配置
+     */
+    private String loadBalancer = LoadBalancerKeys.ROUND_ROBIN;
 
 }

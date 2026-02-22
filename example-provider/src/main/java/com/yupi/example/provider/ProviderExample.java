@@ -26,7 +26,7 @@ public class ProviderExample {
         ServiceMetaInfo myService = ServiceMetaInfo.builder()
                 .serviceName(UserService.class.getName())
                 .serviceHost(rpcConifg.getServerHost())
-                .servicePort(rpcConifg.getPort())
+                .servicePort(rpcConifg.getServerPort())
                 .serviceVersion("1.0")
                 .serviceGroup("default")
                 .build();
@@ -38,7 +38,7 @@ public class ProviderExample {
 
         // 启动 TCP 服务
         VertxTcpServer vertxTcpServer = new VertxTcpServer();
-        vertxTcpServer.doStart(8080);
+        vertxTcpServer.doStart(rpcConifg.getServerPort());
         System.out.println("启动成功");
 //        // 启动服务
 //        HttpServer httpServer = new VertxHttpServer();

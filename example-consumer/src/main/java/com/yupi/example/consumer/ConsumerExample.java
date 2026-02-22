@@ -16,11 +16,11 @@ public class ConsumerExample {
         // 第一次调用
         User newUser = userService.getUser(new User("黑大帅"));
         System.out.println(newUser);
-        // 第二次调用
-        newUser = userService.getUser(new User("黑大帅"));
-        System.out.println(newUser);
-        // 第三次调用
-        newUser = userService.getUser(new User("黑大帅"));
-        System.out.println(newUser);
+//        // 第二次调用
+//        newUser = userService.getUser(new User("黑大帅"));
+//        System.out.println(newUser);
+//        // 第三次调用
+//        newUser = userService.getUser(new User("黑大帅"));
+//        System.out.println(newUser);
     }
 }

@@ -6,6 +6,9 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.yupi.yurpc.RpcApplication;
 import com.yupi.yurpc.conifg.RegistryConfig;
+import com.yupi.yurpc.conifg.RpcConifg;
+import com.yupi.yurpc.loadbalancer.LoadBalancer;
+import com.yupi.yurpc.loadbalancer.LoadBalancerFactory;
 import com.yupi.yurpc.model.RpcRequest;
 import com.yupi.yurpc.model.RpcResponse;
 import com.yupi.yurpc.model.ServiceMetaInfo;
@@ -26,6 +29,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class ServiceProxy implements InvocationHandler {
@@ -52,8 +56,10 @@ public class ServiceProxy implements InvocationHandler {
             if (CollectionUtil.isEmpty(serviceList)) {
                 throw new RuntimeException("服务不存在");
             }
-            // todo 负载均衡
-            ServiceMetaInfo serviceMetaInfo = serviceList.get(0);
+            // 负载均衡
+            LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(RpcApplication.getRpcConfig().getLoadBalancer());
+            Map<String, Object> requestParams = Map.of("methodName", rpcRequest.getMethodName());
+            ServiceMetaInfo serviceMetaInfo = loadBalancer.select(requestParams, serviceList);
 //            // 原方案（http,客户端直接采用hutool）
 //            // 发送请求(采用HttpRequest直接发送)
 //            try(HttpResponse response = HttpRequest.post(serviceMetaInfo.getServiceAddress()).body(serialized).execute()) {
