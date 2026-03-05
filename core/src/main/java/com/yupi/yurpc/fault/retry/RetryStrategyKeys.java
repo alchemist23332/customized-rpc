@@ -9,4 +9,8 @@ public interface RetryStrategyKeys {
      * 固定间隔重试策略
      */
     String FIXED_INTERVAL = "fixedInterval";
+    /**
+     * 指数退避重试策略
+     */
+    String EXPONENTIAL_BACKOFF = "exponentialBackoff";
 }

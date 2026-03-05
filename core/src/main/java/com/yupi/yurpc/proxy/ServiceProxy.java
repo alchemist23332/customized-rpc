@@ -9,6 +9,8 @@ import com.yupi.yurpc.conifg.RegistryConfig;
 import com.yupi.yurpc.conifg.RpcConifg;
 import com.yupi.yurpc.fault.retry.RetryStrategy;
 import com.yupi.yurpc.fault.retry.RetryStrategyFactory;
+import com.yupi.yurpc.fault.tolerant.TolerantStrategy;
+import com.yupi.yurpc.fault.tolerant.TolerantStrategyFactory;
 import com.yupi.yurpc.loadbalancer.LoadBalancer;
 import com.yupi.yurpc.loadbalancer.LoadBalancerFactory;
 import com.yupi.yurpc.model.RpcRequest;
@@ -73,8 +75,15 @@ public class ServiceProxy implements InvocationHandler {
             // 新方案（tcp）采用vertx的客户端
             // 采用重试策略
             RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(RpcApplication.getRpcConfig().getRetryStrategy());
-            RpcResponse rpcResponse = retryStrategy.doRetry(() ->
-                    VertxTcpClient.doRequest(rpcRequest, serviceMetaInfo));
+            RpcResponse rpcResponse;
+            try {
+                rpcResponse = retryStrategy.doRetry(() ->
+                        VertxTcpClient.doRequest(rpcRequest, serviceMetaInfo));
+            } catch (Exception e) {
+                // 重试最终仍旧报错的容错处理
+                TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(RpcApplication.getRpcConfig().getTolerantStrategy());
+                rpcResponse = tolerantStrategy.doTolerant(requestParams, e);
+            }
             return rpcResponse.getData();
         } catch (Exception e) {
             e.printStackTrace();
