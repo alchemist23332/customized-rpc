@@ -58,7 +58,7 @@ public class TcpBufferHandlerWrapper implements Handler<Buffer> {
                     // 2. 然后读取消息体
                     // 写入体信息到结果
                     resultBuffer.appendBuffer(buffer);
-                    // 已拼接为完整 Buffer，执行处理
+                    // 已拼接为完整 Buffer，执行在TcpServerHandler编写的handle方法
                     bufferHandler.handle(resultBuffer);
                     // 重置一轮
                     parser.fixedSizeMode(ProtocolConstant.MESSAGE_HEADER_LENGTH);

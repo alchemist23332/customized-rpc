@@ -37,6 +37,9 @@ public class VertxTcpClient {
                 result -> {
                     if (!result.succeeded()) {
                         System.err.println("Failed to connect to TCP server");
+                        // 连接失败，完成 future（异常情况）
+                        responseFuture.completeExceptionally(result.cause());
+                        netClient.close();
                         return;
                     }
                     NetSocket socket = result.result();
@@ -74,6 +77,13 @@ public class VertxTcpClient {
                             }
                     );
                     socket.handler(bufferHandlerWrapper);
+
+                    // 处理连接断开的情况
+                    socket.closeHandler(v -> {
+                        if (!responseFuture.isDone()) {
+                            responseFuture.completeExceptionally(new RuntimeException("连接已关闭"));
+                        }
+                    });
 
                 });
 //        sleep(2000);

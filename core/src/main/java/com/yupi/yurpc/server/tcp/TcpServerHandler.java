@@ -17,6 +17,9 @@ import java.lang.reflect.Method;
 public class TcpServerHandler implements Handler<NetSocket> {
     @Override
     public void handle(NetSocket netSocket) {
+        // 这里在new TcpBufferHandlerWrapper对象的时候
+        // ()中使用lambda表达式快速构建了一个Handler<Buffer>的实现类，内部重写了handle方法
+        // 这里内部实现类也就是后面的bufferHandler
         TcpBufferHandlerWrapper bufferHandler = new TcpBufferHandlerWrapper(buffer -> {
             // 接受请求并解码
             ProtocolMessage<RpcRequest> protocolMessage;

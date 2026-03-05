@@ -6,6 +6,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class JsonSerializerTest {
 
@@ -29,6 +33,22 @@ public class JsonSerializerTest {
         Assert.assertTrue(deserialized.getArgs()[1] instanceof User);
         User user = (User) deserialized.getArgs()[1];
         Assert.assertEquals("tom", user.getName());
+        List<Integer> list = List.of(1, 2, 3, 4, 5);
+        // 不使用lambda
+        list.stream().filter(new Predicate<Integer>() {
+            @Override
+            public boolean test(Integer integer) {
+                return integer > 2;
+            }
+        }).map(new Function<Integer, Integer>() {
+            @Override
+            public Integer apply(Integer integer) {
+                return integer * 2;
+            }
+        }).collect(Collectors.toList());
+        // 使用lambda
+        list.stream().filter(integer -> integer > 2).map(integer -> integer * 2).collect(Collectors.toList());
+
     }
 
     @Test
