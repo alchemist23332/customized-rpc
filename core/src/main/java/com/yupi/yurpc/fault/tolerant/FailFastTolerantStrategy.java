@@ -10,7 +10,7 @@ import java.util.Map;
 public class FailFastTolerantStrategy implements TolerantStrategy{
 
     @Override
-    public RpcResponse doTolerant(Map<String, Object> requestParams, Exception e) {
+    public RpcResponse doTolerant(Map<String, Object> context, Exception e) {
         throw new RuntimeException("服务调用出错", e);
     }
 }

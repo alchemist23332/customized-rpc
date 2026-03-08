@@ -8,9 +8,9 @@ public interface TolerantStrategy {
     /**
      * 容错处理
      *
-     * @param requestParams
+     * @param context
      * @param e
      * @return
      */
-    RpcResponse doTolerant(Map<String, Object> requestParams, Exception e);
+    RpcResponse doTolerant(Map<String, Object> context, Exception e);
 }

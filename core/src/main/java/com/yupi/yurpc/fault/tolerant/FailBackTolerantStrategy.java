@@ -9,7 +9,7 @@ import java.util.Map;
 public class FailBackTolerantStrategy implements TolerantStrategy{
 
     @Override
-    public RpcResponse doTolerant(Map<String, Object> requestParams, Exception e) {
+    public RpcResponse doTolerant(Map<String, Object> context, Exception e) {
         return null;
     }
 }

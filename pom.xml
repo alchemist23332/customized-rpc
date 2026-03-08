@@ -14,6 +14,8 @@
         <module>example-common</module>
         <module>yu-rpc-easy</module>
         <module>core</module>
+        <module>example-springboot-consumer</module>
+        <module>example-springboot-provider</module>
     </modules>
 
     <properties>

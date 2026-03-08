@@ -20,6 +20,7 @@ public class ServiceMetaInfo {
     /**
      * 服务版本
      */
+    @Builder.Default
     private String serviceVersion = "1.0";
     /**
      * 服务地址
@@ -32,6 +33,7 @@ public class ServiceMetaInfo {
     /**
      * 服务分组
      */
+    @Builder.Default
     private String serviceGroup = "default";
 
     /**

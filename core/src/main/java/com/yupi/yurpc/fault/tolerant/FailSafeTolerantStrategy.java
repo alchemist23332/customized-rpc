@@ -12,7 +12,7 @@ import java.util.Map;
 public class FailSafeTolerantStrategy implements TolerantStrategy{
 
     @Override
-    public RpcResponse doTolerant(Map<String, Object> requestParams, Exception e) {
+    public RpcResponse doTolerant(Map<String, Object> context, Exception e) {
         log.info("服务调用出错，采用静默处理策略");
         return new RpcResponse();
     }
